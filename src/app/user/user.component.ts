@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { UserService } from './user.service';
+import { DataService } from '../shared/data.service';
+
+@Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss'],
+  providers: [UserService, DataService]
+})
+export class UserComponent implements OnInit {
+
+  user: { name: string };
+  isLoggedIn = false;
+  data: string;
+
+  constructor(
+    private _userService: UserService,
+    private _dataService: DataService
+  ) { }
+
+  ngOnInit() {
+    this.user = this._userService.user;
+    this._dataService.getDetails()
+      .then((data: string) => this.data = data);
+  }
+
+}
